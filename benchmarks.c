@@ -3,18 +3,29 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* Functions used as benchmarking data */
 int sum1(int);
 int sum2(int, int);
 int sum3(int, int, int);
+
+/* Handle output to stdout and to file */
 void print(char *, FILE *);
 void print_header(char *, FILE *);
 
-static clock_t start, end;
+static clock_t start, end; /* used to measure time */
+/* In order to measure fast operations, they must be run multiple times. */
+static unsigned long long int iterations = 1000000000;
 
+/*
+ * Measure common operations performed in C and compare them to each
+ * other. The value showed in this benchmark measures CPU cycles and
+ * does not mean the time spent in seconds though it can be seen as a
+ * reflection of the actual time.
+ */
 int
 main()
 {
-    unsigned long long int iterations = 1000000000;
+    /* Variables used as benchmarking data */
     unsigned long long int register i;
     int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
     int index = 4;
@@ -22,14 +33,16 @@ main()
     char filename[] = "tmp_benchmark";
     FILE *f;
     char buf[256];
-
-    char log_file[] = "results";
-    FILE *f_log;
-    f_log = fopen(log_file, "w");
-
     unsigned int i1 = (int)rand(), i2 = (int)rand(), i3 = (int)rand();
     float  f1 = (float)rand(), f2 = (float)rand(), f3 = (float)rand();
     double d1 = (double)rand(), d2 = (double)rand(), d3 = (double)rand();
+
+    /* Logging variables */
+    char log_file[] = "results"; /* name of the file to save logs to */
+    FILE *f_log;
+    f_log = fopen(log_file, "w");
+
+    /* Start of the benchmark */
 
     print_header("\nIntegers:\n\n", f_log);
 
