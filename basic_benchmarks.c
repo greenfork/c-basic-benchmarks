@@ -444,14 +444,14 @@ printf("\nDoubles:\n\n");
     for (i = 0; i < iterations; i++)
         sscanf("12345", "%d", &i1);
     end = clock();
-    printf("%50s\t", "sscanf(\"12345\", \"%%d\", &i1)");
+    printf("%50s\t", "sscanf(\"12345\", \"%d\", &i1)");
     printf("%8.0lf\n", difftime(end, start));
 
     start = clock();
     for (i = 0; i < iterations; i++)
         snprintf(buf, 256, "%d", i1);
     end = clock();
-    printf("%50s\t", "snprintf(buf, 256, \"%%d\", i1)");
+    printf("%50s\t", "snprintf(buf, 256, \"%d\", i1)");
     printf("%8.0lf\n", difftime(end, start));
 
     start = clock();
@@ -465,14 +465,14 @@ printf("\nDoubles:\n\n");
     for (i = 0; i < iterations; i++)
         sscanf("123.45", "%f", &f1);
     end = clock();
-    printf("%50s\t", "sscanf(\"123.45\", \"%%f\", &f1)");
+    printf("%50s\t", "sscanf(\"123.45\", \"%f\", &f1)");
     printf("%8.0lf\n", difftime(end, start));
 
     start = clock();
     for (i = 0; i < iterations; i++)
         snprintf(buf, 256, "%8.0f", f1);
     end = clock();
-    printf("%50s\t", "snprintf(buf, 256, \"%%8.0f\", f1)");
+    printf("%50s\t", "snprintf(buf, 256, \"%8.0f\", f1)");
     printf("%8.0lf\n", difftime(end, start));
 
     return 0;
@@ -484,12 +484,14 @@ sum1(int a)
     return a;
 }
 
-int sum2(int a, int b)
+int
+sum2(int a, int b)
 {
     return a + b;
 }
 
-int sum3(int a, int b, int c)
+int
+sum3(int a, int b, int c)
 {
     return a + b + c;
 }
