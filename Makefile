@@ -1,13 +1,17 @@
-FILE.c = benchmarks.c
+FILE.c     = benchmarks.c
 EXECUTABLE = benchmarks
+LOG_FILE   = results
 
-all: build run
+CC = cc
+
+all: build run clean
 
 build:
-	cc -o ${EXECUTABLE} ${FILE.c}
+	${CC} -o ${EXECUTABLE} ${FILE.c}
 
 run: build
 	./${EXECUTABLE}
+	@echo "Results are also saved in '${LOG_FILE}'"
 
 DEBRIS = tmp_benchmark
 
