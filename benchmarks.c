@@ -336,10 +336,12 @@ main()
     end = clock();
     print("fopen(filename, \"w\"); fputs(\"12345\", f); fclose(f);", f_log);
 
+    f = fopen(filename, "r");
     start = clock();
     for (i = 0; i < iterations; i++)
         fgets(buf, 9, f);
     end = clock();
+    fclose(f);
     print("fgets(buf, 9, f)", f_log);
 
     start = clock();
@@ -351,13 +353,13 @@ main()
     end = clock();
     print("fopen(filename, \"w\"); fprintf(f, \"%d\", 15); fclose(f);", f_log);
 
+    f = fopen(filename, "r");
     start = clock();
     for (i = 0; i < iterations; i++)
         fscanf(f, "%d", &i1);
     end = clock();
-    print("fscanf(f, \"%d\", &i1)", f_log);
-
     fclose(f);
+    print("fscanf(f, \"%d\", &i1)", f_log);
 
     print_header("\nMalloc and free:\n\n", f_log);
     print_header("warning: this is not a regular use of the functions\n\n", f_log);
@@ -458,6 +460,8 @@ print(char *s, FILE *f)
     fprintf(f, "%58s\t\t", s);
     printf("%8.0lf\n", difftime(end, start));
     fprintf(f, "%8.0lf\n", difftime(end, start));
+    /* Save intermediate results in case of abort */
+    fflush(f);
 }
 
 void
@@ -465,4 +469,6 @@ print_header(char *s, FILE *f)
 {
     printf("%s", s);
     fprintf(f, "%s", s);
+    /* Save intermediate results in case of abort */
+    fflush(f);
 }
