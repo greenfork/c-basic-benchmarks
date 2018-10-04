@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* In order to measure fast operations, they must be run multiple times. */
+unsigned long long int iterations = 1000000000;
+
 /* Variables used as benchmarking data */
 static unsigned long long int i;
 static int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
@@ -15,8 +18,6 @@ static unsigned int i1, i2, i3;
 static float f1, f2, f3;
 static double d1, d2, d3;
 static clock_t start, end; /* used to measure time */
-/* In order to measure fast operations, they must be run multiple times. */
-static const unsigned long long int iterations = 10;//1000000000;
 static int c;
 
 /* Flags to choose to run different benchmarks */
@@ -81,6 +82,16 @@ main()
     if ((c = getchar()) == 'y')
         flag_gb_of_space = 1;
 
+    /* Adjust the number of iterations */
+    printf("\nWould you like to adjust the number of iterations ");
+    printf("per each benchmark?\n");
+    printf("Benchmarks on fast operations should be run multiple times.\n");
+    printf("If the current value runs too long or too fast, adjust its value.\n");
+    printf("Enter the number of iterations or press enter for default\n");
+    printf("[default %lld]: ", iterations);
+    unsigned long long int tmp_iterations;
+    if (scanf("%lld", &tmp_iterations) == 1)
+        iterations = tmp_iterations;
 
     /* Start of the benchmark */
 
