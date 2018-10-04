@@ -5,6 +5,7 @@
 
 /* In order to measure fast operations, they must be run multiple times. */
 unsigned long long int iterations = 1000000000;
+short flag_interactive = 1; /* whether to run in interactive mode */
 
 /* Variables used as benchmarking data */
 static unsigned long long int i;
@@ -74,25 +75,27 @@ main()
     d1 = (double)rand(), d2 = (double)rand(), d3 = (double)rand();
     f_log = fopen(log_file, "w");
 
-    /* Whether to run benchmarks which take 1GB of space */
-    printf("\nDo you have 1 gigabyte of space? ");
-    printf("Some extra benchmarks will be run in this case.\n");
-    printf("Type y to activate those benchmarks ");
-    printf("or press enter for default\n[default no]: ");
-    if ((c = getchar()) == 'y')
-        flag_gb_of_space = 1;
+    if (flag_interactive) {
+        /* Whether to run benchmarks which take 1GB of space */
+        printf("\nDo you have 1 gigabyte of space? ");
+        printf("Some extra benchmarks will be run in this case.\n");
+        printf("Type y to activate those benchmarks ");
+        printf("or press enter for default\n[default no]: ");
+        if ((c = getchar()) == 'y')
+            flag_gb_of_space = 1;
 
-    /* Adjust the number of iterations */
-    printf("\nWould you like to adjust the number of iterations ");
-    printf("per each benchmark?\n");
-    printf("Benchmarks on fast operations should be run multiple times.\n");
-    printf("If the current value runs too long or too fast, ");
-    printf("adjust its value.\n");
-    printf("Enter the number of iterations or press enter for default\n");
-    printf("[default %lld]: ", iterations);
-    unsigned long long int tmp_iterations;
-    if (scanf("%lld", &tmp_iterations) == 1)
-        iterations = tmp_iterations;
+        /* Adjust the number of iterations */
+        printf("\nWould you like to adjust the number of iterations ");
+        printf("per each benchmark?\n");
+        printf("Benchmarks on fast operations should be run multiple times.\n");
+        printf("If the current value runs too long or too fast, ");
+        printf("adjust its value.\n");
+        printf("Enter the number of iterations or press enter for default\n");
+        printf("[default %lld]: ", iterations);
+        unsigned long long int tmp_iterations;
+        if (scanf("%lld", &tmp_iterations) == 1)
+            iterations = tmp_iterations;
+    }
 
     /* Start of the benchmark */
 
