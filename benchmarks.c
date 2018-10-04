@@ -21,6 +21,7 @@ static float f1, f2, f3;
 static double d1, d2, d3;
 static clock_t start, end; /* used to measure time */
 static int c;
+static unsigned long long int tmp_iterations;
 
 /* Functions which execute particular benchmarks */
 void integers(void);
@@ -68,11 +69,14 @@ main()
         printf("Some extra benchmarks will be run in this case.\n");
         printf("Type y to activate those benchmarks ");
         printf("or press enter for default\n[default no]: ");
-        if ((c = getchar()) == 'y')
+        fgets(buf, sizeof(buf), stdin);
+        if (buf[0] == 'y')
             flag_gb_of_space = 1;
 
-        if (DEBUG)
-            printf("\n\n*debug* flag_gb_of_space: %d\n\n", flag_gb_of_space);
+        if (DEBUG) {
+            printf("\n\n*debug* flag_gb_of_space: %d\n", flag_gb_of_space);
+            printf("*debug* %s\n\n", buf);
+        }
 
         /* Adjust the number of iterations */
         printf("\nWould you like to adjust the number of iterations ");
@@ -82,15 +86,14 @@ main()
         printf("adjust its value.\n");
         printf("Enter the number of iterations or press enter for default\n");
         printf("[default %lld]: ", iterations);
-        unsigned long long int tmp_iterations;
-        int iterations_scanf_rs = scanf("%lld", &tmp_iterations);
-        if (iterations_scanf_rs == 1)
+        fgets(buf, sizeof(buf), stdin);
+        if (sscanf(buf, "%lld", &tmp_iterations) == 1)
             iterations = tmp_iterations;
 
         if (DEBUG) {
             printf("\n\n*debug* tmp_iterations: %lld\n", tmp_iterations);
             printf("*debug* iterations: %lld\n", iterations);
-            printf("*debug* iterations_scanf_rs: %d\n\n", iterations_scanf_rs);
+            printf("*debug* %s\n\n", buf);
         }
     }
 

@@ -4,7 +4,7 @@
 /* In order to measure fast operations, they must be run multiple times. */
 unsigned long long int iterations = 1000000000;
 /* Whether to run benchmarks which take 1GB of space to run */
-short flag_gb_of_space = 1;
+short flag_gb_of_space = 0;
 
 enum Flag {
     /* Whether to run in interactive mode */
