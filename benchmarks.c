@@ -14,7 +14,7 @@ void print_header(char *, FILE *);
 
 static clock_t start, end; /* used to measure time */
 /* In order to measure fast operations, they must be run multiple times. */
-static unsigned long long int iterations = 1000000000;
+static const unsigned long long int iterations = 1000000000;
 
 /*
  * Measure common operations performed in C and compare them to each
@@ -41,6 +41,29 @@ main()
     char log_file[] = "results"; /* name of the file to save logs to */
     FILE *f_log;
     f_log = fopen(log_file, "w");
+
+    /* Whether to run benchmarks which take 1GB of space */
+    short flag_gb_of_space = 0;
+    int c;
+    printf("\nDo you have 1 gigabyte of space? ");
+    printf("Some extra benchmarks will be run in this case.\n");
+    printf("Type y to activate those benchmarks ");
+    printf("or enter for default [default no]: ");
+    if ((c = getchar()) == 'y')
+        flag_gb_of_space = 1;
+
+    /* Flags to choose to run different benchmarks */
+    short flag_integers = 1;
+    short flag_floats = 1;
+    short flag_doubles = 1;
+    short flag_conversions = 1;
+    short flag_array_indexing = 1;
+    short flag_control_structures = 1;
+    short flag_function_dispatch = 1;
+    short flag_input_output = 1;
+    short flag_malloc_free = 1;
+    short flag_string_functions = 1;
+    short flag_string_number_conversion = 1;
 
     /* Start of the benchmark */
 
@@ -340,14 +363,19 @@ main()
 
     print_header("\nInput/Output:\n\n", f_log);
 
-    start = clock();
-    for (i = 0; i < iterations; i++) {
+    if (flag_gb_of_space) {
         f = fopen(filename, "w");
-        fputs("12345", f);
+        start = clock();
+        for (i = 0; i < iterations; i++)
+            fputs("12345", f);
+        end = clock();
+        fclose(f);
+        print("fopen(filename, \"w\"); fputs(\"12345\", f); fclose(f);", f_log);
+    } else {
+        f = fopen(filename, "w");
+        fputs("qwertyiiop[asdfghj;zxc]", f);
         fclose(f);
     }
-    end = clock();
-    print("fopen(filename, \"w\"); fputs(\"12345\", f); fclose(f);", f_log);
 
     f = fopen(filename, "r");
     start = clock();
@@ -357,14 +385,19 @@ main()
     fclose(f);
     print("fgets(buf, 9, f)", f_log);
 
-    start = clock();
-    for (i = 0; i < iterations; i++) {
+    if (flag_gb_of_space) {
+        start = clock();
         f = fopen(filename, "w");
-        fprintf(f, "%d\n", 15);
+        for (i = 0; i < iterations; i++)
+            fprintf(f, "%d\n", 15);
+        end = clock();
+        fclose(f);
+        print("fopen(filename, \"w\"); fprintf(f, \"%d\", 15); fclose(f);", f_log);
+    } else {
+        f = fopen(filename, "w");
+        fputs("1111111111111155555555555555555111111111111", f);
         fclose(f);
     }
-    end = clock();
-    print("fopen(filename, \"w\"); fprintf(f, \"%d\", 15); fclose(f);", f_log);
 
     f = fopen(filename, "r");
     start = clock();
