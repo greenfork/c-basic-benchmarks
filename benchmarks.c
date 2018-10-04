@@ -71,6 +71,9 @@ main()
         if ((c = getchar()) == 'y')
             flag_gb_of_space = 1;
 
+        if (DEBUG)
+            printf("\n\n*debug* flag_gb_of_space: %d\n\n", flag_gb_of_space);
+
         /* Adjust the number of iterations */
         printf("\nWould you like to adjust the number of iterations ");
         printf("per each benchmark?\n");
@@ -80,8 +83,15 @@ main()
         printf("Enter the number of iterations or press enter for default\n");
         printf("[default %lld]: ", iterations);
         unsigned long long int tmp_iterations;
-        if (scanf("%lld", &tmp_iterations) == 1)
+        int iterations_scanf_rs = scanf("%lld", &tmp_iterations);
+        if (iterations_scanf_rs == 1)
             iterations = tmp_iterations;
+
+        if (DEBUG) {
+            printf("\n\n*debug* tmp_iterations: %lld\n", tmp_iterations);
+            printf("*debug* iterations: %lld\n", iterations);
+            printf("*debug* iterations_scanf_rs: %d\n\n", iterations_scanf_rs);
+        }
     }
 
     /* Start of the benchmark */
