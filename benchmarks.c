@@ -45,7 +45,7 @@ void print(char *, FILE *);
 void print_header(char *, FILE *);
 
 /* Logging variables */
-static const char log_file[] = "results"; /* name of the file to save logs to */
+extern const char log_file[];
 static FILE *f_log;
 
 /*

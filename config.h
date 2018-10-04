@@ -3,13 +3,17 @@
 
 /* In order to measure fast operations, they must be run multiple times. */
 unsigned long long int iterations = 1000000000;
-/* Whether to run benchmarks which take 1GB of space to run */
+/* Whether to run benchmarks which take 1GB of space to run.
+ * Can be changed in interactive mode. */
 short flag_gb_of_space = 0;
+/* Name of the file to save logs to. */
+const char log_file[] = "results";
+
 
 enum Flag {
-    /* Whether to run in interactive mode */
+    /* Whether to run in interactive mode. */
     FLAG_INTERACTIVE              = 1,
-    /* Flags to choose to run different benchmarks */
+    /* Flags to choose to run different benchmarks. */
     FLAG_INTEGERS                 = 1,
     FLAG_FLOATS                   = 1,
     FLAG_DOUBLES                  = 1,
