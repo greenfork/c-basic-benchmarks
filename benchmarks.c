@@ -33,6 +33,19 @@ static short flag_string_functions = 1;
 static short flag_string_number_conversion = 1;
 static short flag_gb_of_space = 0;
 
+/* Functions which execute particular benchmarks */
+void integers(void);
+void floats(void);
+void doubles(void);
+void conversions(void);
+void array_indexing(void);
+void control_structures(void);
+void function_dispatch(void);
+void input_output(void);
+void malloc_free(void);
+void string_functions(void);
+void string_number_conversion(void);
+
 /* Functions used as benchmarking data */
 int sum1(int);
 int sum2(int, int);
@@ -71,6 +84,64 @@ main()
 
     /* Start of the benchmark */
 
+    if (flag_integers)                  integers();
+    if (flag_floats)                    floats();
+    if (flag_doubles)                   doubles();
+    if (flag_conversions)               conversions();
+    if (flag_array_indexing)            array_indexing();
+    if (flag_control_structures)        control_structures();
+    if (flag_function_dispatch)         function_dispatch();
+    if (flag_input_output)              input_output();
+    if (flag_malloc_free)               malloc_free();
+    if (flag_string_functions)          string_functions();
+    if (flag_string_number_conversion)  string_number_conversion();
+
+    fclose(f_log);
+
+    return 0;
+}
+
+int
+sum1(int a)
+{
+    return a;
+}
+
+int
+sum2(int a, int b)
+{
+    return a + b;
+}
+
+int
+sum3(int a, int b, int c)
+{
+    return a + b + c;
+}
+
+void
+print(char *s, FILE *f)
+{
+    printf("%58s\t\t", s);
+    fprintf(f, "%58s\t\t", s);
+    printf("%8.0lf\n", difftime(end, start));
+    fprintf(f, "%8.0lf\n", difftime(end, start));
+    /* Save intermediate results in case of abort */
+    fflush(f);
+}
+
+void
+print_header(char *s, FILE *f)
+{
+    printf("%s", s);
+    fprintf(f, "%s", s);
+    /* Save intermediate results in case of abort */
+    fflush(f);
+}
+
+void
+integers(void)
+{
     print_header("\nIntegers:\n\n", f_log);
 
     start = clock();
@@ -138,8 +209,11 @@ main()
         i1 >= i2;
     end = clock();
     print("i1 >= i2", f_log);
+}
 
-
+void
+floats(void)
+{
     print_header("\nFloats:\n\n", f_log);
 
     start = clock();
@@ -201,8 +275,11 @@ main()
         f1 >= f2;
     end = clock();
     print("f1 >= f2", f_log);
+}
 
-
+void
+doubles(void)
+{
     print_header("\nDoubles:\n\n", f_log);
 
     start = clock();
@@ -264,7 +341,11 @@ main()
         d1 >= d2;
     end = clock();
     print("d1 >= d2", f_log);
+}
 
+void
+conversions(void)
+{
     print_header("\nConversions:\n\n", f_log);
 
     start = clock();
@@ -302,7 +383,11 @@ main()
         d1 = (double)f1;
     end = clock();
     print("d1 = (double)f1", f_log);
+}
 
+void
+array_indexing(void)
+{
     print_header("\nArray indexing and assignment:\n\n", f_log);
 
     start = clock();
@@ -322,7 +407,11 @@ main()
         arr[arr[arr[idx]]] = idx;
     end = clock();
     print("arr[arr[arr[index]]] = index", f_log);
+}
 
+void
+control_structures(void)
+{
     print_header("\nControl structures:\n\n", f_log);
 
     start = clock();
@@ -344,7 +433,11 @@ main()
     }
     end = clock();
     print("while (while_cnt < 0) i++", f_log);
+}
 
+void
+function_dispatch(void)
+{
     print_header("\nFunction dispatch:\n\n", f_log);
 
     start = clock();
@@ -364,7 +457,11 @@ main()
         i1 = sum3(i1, i2, i3);
     end = clock();
     print("i1 = sum3(i1, i2, i3)", f_log);
+}
 
+void
+input_output(void)
+{
     print_header("\nInput/Output:\n\n", f_log);
 
     if (flag_gb_of_space) {
@@ -410,7 +507,11 @@ main()
     end = clock();
     fclose(f);
     print("fscanf(f, \"%d\", &i1)", f_log);
+}
 
+void
+malloc_free(void)
+{
     print_header("\nMalloc and free:\n\n", f_log);
     print_header("warning: this is not a regular use of the functions\n\n", f_log);
 
@@ -419,7 +520,11 @@ main()
         free(malloc(8));
     end = clock();
     print("free(malloc(8))", f_log);
+}
 
+void
+string_functions(void)
+{
     print_header("\nString functions:\n\n", f_log);
 
     start = clock();
@@ -439,7 +544,11 @@ main()
         i1 = strcmp(buf, "a123456789");
     end = clock();
     print("i1 = strcmp(buf, \"a123456789\")", f_log);
+}
 
+void
+string_number_conversion(void)
+{
     print_header("\nString/number conversion:\n\n", f_log);
 
     start = clock();
@@ -477,46 +586,4 @@ main()
         snprintf(buf, 256, "%8.0f", f1);
     end = clock();
     print("snprintf(buf, 256, \"%8.0f\", f1)", f_log);
-
-    fclose(f_log);
-
-    return 0;
-}
-
-int
-sum1(int a)
-{
-    return a;
-}
-
-int
-sum2(int a, int b)
-{
-    return a + b;
-}
-
-int
-sum3(int a, int b, int c)
-{
-    return a + b + c;
-}
-
-void
-print(char *s, FILE *f)
-{
-    printf("%58s\t\t", s);
-    fprintf(f, "%58s\t\t", s);
-    printf("%8.0lf\n", difftime(end, start));
-    fprintf(f, "%8.0lf\n", difftime(end, start));
-    /* Save intermediate results in case of abort */
-    fflush(f);
-}
-
-void
-print_header(char *s, FILE *f)
-{
-    printf("%s", s);
-    fprintf(f, "%s", s);
-    /* Save intermediate results in case of abort */
-    fflush(f);
 }
