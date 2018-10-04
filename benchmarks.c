@@ -3,6 +3,36 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* Variables used as benchmarking data */
+static unsigned long long int i;
+static int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+static const int idx = 4;
+static int while_cnt = -8;
+static char filename[] = "tmp_benchmark";
+static FILE *f;
+static char buf[256];
+static unsigned int i1, i2, i3;
+static float f1, f2, f3;
+static double d1, d2, d3;
+static clock_t start, end; /* used to measure time */
+/* In order to measure fast operations, they must be run multiple times. */
+static const unsigned long long int iterations = 10;//1000000000;
+static int c;
+
+/* Flags to choose to run different benchmarks */
+static short flag_integers = 1;
+static short flag_floats = 1;
+static short flag_doubles = 1;
+static short flag_conversions = 1;
+static short flag_array_indexing = 1;
+static short flag_control_structures = 1;
+static short flag_function_dispatch = 1;
+static short flag_input_output = 1;
+static short flag_malloc_free = 1;
+static short flag_string_functions = 1;
+static short flag_string_number_conversion = 1;
+static short flag_gb_of_space = 0;
+
 /* Functions used as benchmarking data */
 int sum1(int);
 int sum2(int, int);
@@ -12,9 +42,9 @@ int sum3(int, int, int);
 void print(char *, FILE *);
 void print_header(char *, FILE *);
 
-static clock_t start, end; /* used to measure time */
-/* In order to measure fast operations, they must be run multiple times. */
-static const unsigned long long int iterations = 1000000000;
+/* Logging variables */
+static char log_file[] = "results"; /* name of the file to save logs to */
+static FILE *f_log;
 
 /*
  * Measure common operations performed in C and compare them to each
@@ -25,45 +55,19 @@ static const unsigned long long int iterations = 1000000000;
 int
 main()
 {
-    /* Variables used as benchmarking data */
-    unsigned long long int register i;
-    int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-    int index = 4;
-    int while_cnt = -8;
-    char filename[] = "tmp_benchmark";
-    FILE *f;
-    char buf[256];
-    unsigned int i1 = (int)rand(), i2 = (int)rand(), i3 = (int)rand();
-    float  f1 = (float)rand(), f2 = (float)rand(), f3 = (float)rand();
-    double d1 = (double)rand(), d2 = (double)rand(), d3 = (double)rand();
-
-    /* Logging variables */
-    char log_file[] = "results"; /* name of the file to save logs to */
-    FILE *f_log;
+    i1 = (int)rand(), i2 = (int)rand(), i3 = (int)rand();
+    f1 = (float)rand(), f2 = (float)rand(), f3 = (float)rand();
+    d1 = (double)rand(), d2 = (double)rand(), d3 = (double)rand();
     f_log = fopen(log_file, "w");
 
     /* Whether to run benchmarks which take 1GB of space */
-    short flag_gb_of_space = 0;
-    int c;
     printf("\nDo you have 1 gigabyte of space? ");
     printf("Some extra benchmarks will be run in this case.\n");
     printf("Type y to activate those benchmarks ");
-    printf("or enter for default [default no]: ");
+    printf("or press enter for default [default no]: ");
     if ((c = getchar()) == 'y')
         flag_gb_of_space = 1;
 
-    /* Flags to choose to run different benchmarks */
-    short flag_integers = 1;
-    short flag_floats = 1;
-    short flag_doubles = 1;
-    short flag_conversions = 1;
-    short flag_array_indexing = 1;
-    short flag_control_structures = 1;
-    short flag_function_dispatch = 1;
-    short flag_input_output = 1;
-    short flag_malloc_free = 1;
-    short flag_string_functions = 1;
-    short flag_string_number_conversion = 1;
 
     /* Start of the benchmark */
 
@@ -303,19 +307,19 @@ main()
 
     start = clock();
     for (i = 0; i < iterations; i++)
-        arr[index] = index;
+        arr[idx] = idx;
     end = clock();
     print("arr[index] = index", f_log);
 
     start = clock();
     for (i = 0; i < iterations; i++)
-        arr[arr[index]] = index;
+        arr[arr[idx]] = idx;
     end = clock();
     print("arr[arr[index]] = index", f_log);
 
     start = clock();
     for (i = 0; i < iterations; i++)
-        arr[arr[arr[index]]] = index;
+        arr[arr[arr[idx]]] = idx;
     end = clock();
     print("arr[arr[arr[index]]] = index", f_log);
 
@@ -370,7 +374,7 @@ main()
             fputs("12345", f);
         end = clock();
         fclose(f);
-        print("fopen(filename, \"w\"); fputs(\"12345\", f); fclose(f);", f_log);
+        print("fputs(\"12345\", f);", f_log);
     } else {
         f = fopen(filename, "w");
         fputs("qwertyiiop[asdfghj;zxc]", f);
@@ -392,7 +396,7 @@ main()
             fprintf(f, "%d\n", 15);
         end = clock();
         fclose(f);
-        print("fopen(filename, \"w\"); fprintf(f, \"%d\", 15); fclose(f);", f_log);
+        print("fprintf(f, \"%d\", 15);", f_log);
     } else {
         f = fopen(filename, "w");
         fputs("1111111111111155555555555555555111111111111", f);
@@ -453,7 +457,6 @@ main()
     start = clock();
     for (i = 0; i < iterations; i++)
         snprintf(buf, 256, "%d", i1);
-    fprintf(f_log, buf, 256, "%d", i1);
     end = clock();
     print("snprintf(buf, 256, \"%d\", i1)", f_log);
 
@@ -472,7 +475,6 @@ main()
     start = clock();
     for (i = 0; i < iterations; i++)
         snprintf(buf, 256, "%8.0f", f1);
-    fprintf(f_log, buf, 256, "%8.0f", f1);
     end = clock();
     print("snprintf(buf, 256, \"%8.0f\", f1)", f_log);
 
