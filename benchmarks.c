@@ -3,9 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* In order to measure fast operations, they must be run multiple times. */
-unsigned long long int iterations = 1000000000;
-short flag_interactive = 1; /* whether to run in interactive mode */
+#include "config.h"
+
+extern unsigned long long int iterations;
+extern short flag_gb_of_space;
 
 /* Variables used as benchmarking data */
 static unsigned long long int i;
@@ -20,20 +21,6 @@ static float f1, f2, f3;
 static double d1, d2, d3;
 static clock_t start, end; /* used to measure time */
 static int c;
-
-/* Flags to choose to run different benchmarks */
-static short flag_integers = 1;
-static short flag_floats = 1;
-static short flag_doubles = 1;
-static short flag_conversions = 1;
-static short flag_array_indexing = 1;
-static short flag_control_structures = 1;
-static short flag_function_dispatch = 1;
-static short flag_input_output = 1;
-static short flag_malloc_free = 1;
-static short flag_string_functions = 1;
-static short flag_string_number_conversion = 1;
-static short flag_gb_of_space = 0;
 
 /* Functions which execute particular benchmarks */
 void integers(void);
@@ -75,7 +62,7 @@ main()
     d1 = (double)rand(), d2 = (double)rand(), d3 = (double)rand();
     f_log = fopen(log_file, "w");
 
-    if (flag_interactive) {
+    if (FLAG_INTERACTIVE) {
         /* Whether to run benchmarks which take 1GB of space */
         printf("\nDo you have 1 gigabyte of space? ");
         printf("Some extra benchmarks will be run in this case.\n");
@@ -99,17 +86,17 @@ main()
 
     /* Start of the benchmark */
 
-    if (flag_integers)                  integers();
-    if (flag_floats)                    floats();
-    if (flag_doubles)                   doubles();
-    if (flag_conversions)               conversions();
-    if (flag_array_indexing)            array_indexing();
-    if (flag_control_structures)        control_structures();
-    if (flag_function_dispatch)         function_dispatch();
-    if (flag_input_output)              input_output();
-    if (flag_malloc_free)               malloc_free();
-    if (flag_string_functions)          string_functions();
-    if (flag_string_number_conversion)  string_number_conversion();
+    if (FLAG_INTEGERS)                  integers();
+    if (FLAG_FLOATS)                    floats();
+    if (FLAG_DOUBLES)                   doubles();
+    if (FLAG_CONVERSIONS)               conversions();
+    if (FLAG_ARRAY_INDEXING)            array_indexing();
+    if (FLAG_CONTROL_STRUCTURES)        control_structures();
+    if (FLAG_FUNCTION_DISPATCH)         function_dispatch();
+    if (FLAG_INPUT_OUTPUT)              input_output();
+    if (FLAG_MALLOC_FREE)               malloc_free();
+    if (FLAG_STRING_FUNCTIONS)          string_functions();
+    if (FLAG_STRING_NUMBER_CONVERSION)  string_number_conversion();
 
     fclose(f_log);
 
