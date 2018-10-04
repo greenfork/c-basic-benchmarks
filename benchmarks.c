@@ -13,14 +13,13 @@ static unsigned long long int i;
 static int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 static const int idx = 4;
 static int while_cnt = -8;
-static char filename[] = "tmp_benchmark";
+static const char filename[] = "tmp_benchmark";
 static FILE *f;
 static char buf[256];
 static unsigned int i1, i2, i3;
 static float f1, f2, f3;
 static double d1, d2, d3;
 static clock_t start, end; /* used to measure time */
-static int c;
 static unsigned long long int tmp_iterations;
 
 /* Functions which execute particular benchmarks */
@@ -46,7 +45,7 @@ void print(char *, FILE *);
 void print_header(char *, FILE *);
 
 /* Logging variables */
-static char log_file[] = "results"; /* name of the file to save logs to */
+static const char log_file[] = "results"; /* name of the file to save logs to */
 static FILE *f_log;
 
 /*
