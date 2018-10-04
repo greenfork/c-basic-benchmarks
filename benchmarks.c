@@ -5,6 +5,14 @@
 
 #include "config.h"
 
+#define LOOP(expr) {                            \
+        start = clock();                        \
+        for (i = 0; i < iterations; i++)        \
+            expr;                               \
+        end = clock();                          \
+        print(#expr, f_log);                    \
+    }
+
 extern unsigned long long int iterations;
 extern short flag_gb_of_space;
 
@@ -158,71 +166,17 @@ integers(void)
 {
     print_header("\nIntegers:\n\n", f_log);
 
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        i1++;
-    end = clock();
-    print("i1++", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        i1 = i2;
-    end = clock();
-    print("i1 = i2", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        i1 = i2 + i3;
-    end = clock();
-    print("i1 = i2 + i3", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        i1 = i2 - i3;
-    end = clock();
-    print("i1 = i2 - i3", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        i1 = i2 * i3;
-    end = clock();
-    print("i1 = i2 * i3", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        i1 = i2 / i3;
-    end = clock();
-    print("i1 = i2 / i3", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        i1 = i2 % i3;
-    end = clock();
-    print("i1 = i2 % i3", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        i1 < i2;
-    end = clock();
-    print("i1 < i2", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        i1 > i2;
-    end = clock();
-    print("i1 > i2", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        i1 <= i2;
-    end = clock();
-    print("i1 <= i2", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        i1 >= i2;
-    end = clock();
-    print("i1 >= i2", f_log);
+    LOOP(i1++);
+    LOOP(i1 = i2);
+    LOOP(i1 = i2 + i3);
+    LOOP(i1 = i2 - i3);
+    LOOP(i1 = i2 * i3);
+    LOOP(i1 = i2 / i3);
+    LOOP(i1 = i2 % i3);
+    LOOP(i1 < i2);
+    LOOP(i1 > i2);
+    LOOP(i1 <= i2);
+    LOOP(i1 >= i2);
 }
 
 void
@@ -230,65 +184,16 @@ floats(void)
 {
     print_header("\nFloats:\n\n", f_log);
 
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        f1++;
-    end = clock();
-    print("f1++", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        f1 = f2;
-    end = clock();
-    print("f1 = f2", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        f1 = f2 + f3;
-    end = clock();
-    print("f1 = f2 + f3", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        f1 = f2 - f3;
-    end = clock();
-    print("f1 = f2 - f3", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        f1 = f2 * f3;
-    end = clock();
-    print("f1 = f2 * f3", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        f1 = f2 / f3;
-    end = clock();
-    print("f1 = f2 / f3", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        f1 < f2;
-    end = clock();
-    print("f1 < f2", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        f1 > f2;
-    end = clock();
-    print("f1 > f2", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        f1 <= f2;
-    end = clock();
-    print("f1 <= f2", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        f1 >= f2;
-    end = clock();
-    print("f1 >= f2", f_log);
+    LOOP(f1++);
+    LOOP(f1 = f2);
+    LOOP(f1 = f2 + f3);
+    LOOP(f1 = f2 - f3);
+    LOOP(f1 = f2 * f3);
+    LOOP(f1 = f2 / f3);
+    LOOP(f1 < f2);
+    LOOP(f1 > f2);
+    LOOP(f1 <= f2);
+    LOOP(f1 >= f2);
 }
 
 void
@@ -296,65 +201,16 @@ doubles(void)
 {
     print_header("\nDoubles:\n\n", f_log);
 
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        d1++;
-    end = clock();
-    print("d1++", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        d1 = d2;
-    end = clock();
-    print("d1 = d2", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        d1 = d2 + d3;
-    end = clock();
-    print("d1 = d2 + d3", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        d1 = d2 - d3;
-    end = clock();
-    print("d1 = d2 - d3", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        d1 = d2 * d3;
-    end = clock();
-    print("d1 = d2 * d3", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        d1 = d2 / d3;
-    end = clock();
-    print("d1 = d2 / d3", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        d1 < d2;
-    end = clock();
-    print("d1 < d2", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        d1 > d2;
-    end = clock();
-    print("d1 > d2", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        d1 <= d2;
-    end = clock();
-    print("d1 <= d2", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        d1 >= d2;
-    end = clock();
-    print("d1 >= d2", f_log);
+    LOOP(d1++);
+    LOOP(d1 = d2);
+    LOOP(d1 = d2 + d3);
+    LOOP(d1 = d2 - d3);
+    LOOP(d1 = d2 * d3);
+    LOOP(d1 = d2 / d3);
+    LOOP(d1 < d2);
+    LOOP(d1 > d2);
+    LOOP(d1 <= d2);
+    LOOP(d1 >= d2);
 }
 
 void
@@ -362,41 +218,12 @@ conversions(void)
 {
     print_header("\nConversions:\n\n", f_log);
 
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        i1 = (int)f1;
-    end = clock();
-    print("i1 = (int)f1", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        i1 = (int)d1;
-    end = clock();
-    print("i1 = (int)d1", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        f1 = (float)i1;
-    end = clock();
-    print("f1 = (float)i1", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        f1 = (float)d1;
-    end = clock();
-    print("f1 = (float)d1", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        d1 = (double)i1;
-    end = clock();
-    print("d1 = (double)i1", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        d1 = (double)f1;
-    end = clock();
-    print("d1 = (double)f1", f_log);
+    LOOP(i1 = (int)f1);
+    LOOP(i1 = (int)d1);
+    LOOP(f1 = (float)i1);
+    LOOP(f1 = (float)d1);
+    LOOP(d1 = (double)i1);
+    LOOP(d1 = (double)f1);
 }
 
 void
@@ -404,23 +231,9 @@ array_indexing(void)
 {
     print_header("\nArray indexing and assignment:\n\n", f_log);
 
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        arr[idx] = idx;
-    end = clock();
-    print("arr[index] = index", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        arr[arr[idx]] = idx;
-    end = clock();
-    print("arr[arr[index]] = index", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        arr[arr[arr[idx]]] = idx;
-    end = clock();
-    print("arr[arr[arr[index]]] = index", f_log);
+    LOOP(arr[idx] = idx);
+    LOOP(arr[arr[idx]] = idx);
+    LOOP(arr[arr[arr[idx]]] = idx);
 }
 
 void
@@ -428,25 +241,9 @@ control_structures(void)
 {
     print_header("\nControl structures:\n\n", f_log);
 
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        if (i == 5) i1++;
-    end = clock();
-    print("if (i == 5) i1++", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        if (i != 5) i1++;
-    end = clock();
-    print("if (i != 5) i1++", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++) {
-        while (while_cnt < 0) while_cnt++;
-        while_cnt = -4;
-    }
-    end = clock();
-    print("while (while_cnt < 0) i++", f_log);
+    LOOP(if (i == 5) i1++);
+    LOOP(if (i != 5) i1++);
+    LOOP(while (while_cnt < 0) while_cnt++; while_cnt = -4);
 }
 
 void
@@ -454,23 +251,9 @@ function_dispatch(void)
 {
     print_header("\nFunction dispatch:\n\n", f_log);
 
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        i1 = sum1(i1);
-    end = clock();
-    print("i1 = sum1(i1)", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        i1 = sum2(i1, i2);
-    end = clock();
-    print("i1 = sum2(i1, i2)", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        i1 = sum3(i1, i2, i3);
-    end = clock();
-    print("i1 = sum3(i1, i2, i3)", f_log);
+    LOOP(i1 = sum1(i1));
+    LOOP(i1 = sum2(i1, i2));
+    LOOP(i1 = sum3(i1, i2, i3));
 }
 
 void
@@ -480,12 +263,8 @@ input_output(void)
 
     if (flag_gb_of_space) {
         f = fopen(filename, "w");
-        start = clock();
-        for (i = 0; i < iterations; i++)
-            fputs("12345", f);
-        end = clock();
+        LOOP(fputs("12345", f))
         fclose(f);
-        print("fputs(\"12345\", f);", f_log);
     } else {
         f = fopen(filename, "w");
         fputs("qwertyiiop[asdfghj;zxc]", f);
@@ -493,21 +272,13 @@ input_output(void)
     }
 
     f = fopen(filename, "r");
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        fgets(buf, 9, f);
-    end = clock();
+    LOOP(fgets(buf, 9, f));
     fclose(f);
-    print("fgets(buf, 9, f)", f_log);
 
     if (flag_gb_of_space) {
-        start = clock();
         f = fopen(filename, "w");
-        for (i = 0; i < iterations; i++)
-            fprintf(f, "%d\n", 15);
-        end = clock();
+        LOOP(fprintf(f, "%d\n", 15));
         fclose(f);
-        print("fprintf(f, \"%d\", 15);", f_log);
     } else {
         f = fopen(filename, "w");
         fputs("1111111111111155555555555555555111111111111", f);
@@ -515,12 +286,8 @@ input_output(void)
     }
 
     f = fopen(filename, "r");
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        fscanf(f, "%d", &i1);
-    end = clock();
+    LOOP(fscanf(f, "%d", &i1));
     fclose(f);
-    print("fscanf(f, \"%d\", &i1)", f_log);
 }
 
 void
@@ -530,11 +297,7 @@ malloc_free(void)
     print_header("warning: this is not a regular use of the functions\n\n",
                  f_log);
 
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        free(malloc(8));
-    end = clock();
-    print("free(malloc(8))", f_log);
+    LOOP(free(malloc(8)));
 }
 
 void
@@ -542,23 +305,9 @@ string_functions(void)
 {
     print_header("\nString functions:\n\n", f_log);
 
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        strncpy(buf, "01233456789", sizeof(buf));
-    end = clock();
-    print("strncpy(buf, \"01233456789\", sizeof(buf))", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        i1 = strcmp(buf, buf);
-    end = clock();
-    print("i1 = strcmp(buf, buf)", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        i1 = strcmp(buf, "a123456789");
-    end = clock();
-    print("i1 = strcmp(buf, \"a123456789\")", f_log);
+    LOOP(strncpy(buf, "01233456789", sizeof(buf)));
+    LOOP(i1 = strcmp(buf, buf));
+    LOOP(i1 = strcmp(buf, "a123456789"));
 }
 
 void
@@ -566,39 +315,10 @@ string_number_conversion(void)
 {
     print_header("\nString/number conversion:\n\n", f_log);
 
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        i1 = atoi("12345");
-    end = clock();
-    print("i1 = atoi(\"12345\")", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        sscanf("12345", "%d", &i1);
-    end = clock();
-    print("sscanf(\"12345\", \"%d\", &i1)", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        snprintf(buf, sizeof(buf), "%d", i1);
-    end = clock();
-    print("snprintf(buf, sizeof(buf), \"%d\", i1)", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        f1 = atof("123.45");
-    end = clock();
-    print("f1 = atof(\"123.45\")", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        sscanf("123.45", "%f", &f1);
-    end = clock();
-    print("sscanf(\"123.45\", \"%f\", &f1)", f_log);
-
-    start = clock();
-    for (i = 0; i < iterations; i++)
-        snprintf(buf, sizeof(buf), "%8.0f", f1);
-    end = clock();
-    print("snprintf(buf, sizeof(buf), \"%8.0f\", f1)", f_log);
+    LOOP(i1 = atoi("12345"));
+    LOOP(sscanf("12345", "%d", &i1));
+    LOOP(snprintf(buf, sizeof(buf), "%d", i1));
+    LOOP(f1 = atof("123.45"));
+    LOOP(sscanf("123.45", "%f", &f1));
+    LOOP(snprintf(buf, sizeof(buf), "%8.0f", f1));
 }
