@@ -78,7 +78,7 @@ main()
     printf("\nDo you have 1 gigabyte of space? ");
     printf("Some extra benchmarks will be run in this case.\n");
     printf("Type y to activate those benchmarks ");
-    printf("or press enter for default [default no]: ");
+    printf("or press enter for default\n[default no]: ");
     if ((c = getchar()) == 'y')
         flag_gb_of_space = 1;
 
