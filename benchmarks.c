@@ -545,9 +545,9 @@ string_functions(void)
 
     start = clock();
     for (i = 0; i < iterations; i++)
-        strncpy(buf, "01233456789", 256);
+        strncpy(buf, "01233456789", sizeof(buf));
     end = clock();
-    print("strncpy(buf, \"01233456789\", 256)", f_log);
+    print("strncpy(buf, \"01233456789\", sizeof(buf))", f_log);
 
     start = clock();
     for (i = 0; i < iterations; i++)
@@ -581,9 +581,9 @@ string_number_conversion(void)
 
     start = clock();
     for (i = 0; i < iterations; i++)
-        snprintf(buf, 256, "%d", i1);
+        snprintf(buf, sizeof(buf), "%d", i1);
     end = clock();
-    print("snprintf(buf, 256, \"%d\", i1)", f_log);
+    print("snprintf(buf, sizeof(buf), \"%d\", i1)", f_log);
 
     start = clock();
     for (i = 0; i < iterations; i++)
@@ -599,7 +599,7 @@ string_number_conversion(void)
 
     start = clock();
     for (i = 0; i < iterations; i++)
-        snprintf(buf, 256, "%8.0f", f1);
+        snprintf(buf, sizeof(buf), "%8.0f", f1);
     end = clock();
-    print("snprintf(buf, 256, \"%8.0f\", f1)", f_log);
+    print("snprintf(buf, sizeof(buf), \"%8.0f\", f1)", f_log);
 }
