@@ -123,23 +123,9 @@ main()
     return 0;
 }
 
-int
-sum1(int a)
-{
-    return a;
-}
-
-int
-sum2(int a, int b)
-{
-    return a + b;
-}
-
-int
-sum3(int a, int b, int c)
-{
-    return a + b + c;
-}
+int sum1(int a) {return a;}
+int sum2(int a, int b) {return a + b;}
+int sum3(int a, int b, int c) {return a + b + c;}
 
 void
 print(char *s, FILE *f)
@@ -293,7 +279,7 @@ input_output(void)
 void
 malloc_free(void)
 {
-    print_header("\nMalloc and free:\n\n", f_log);
+    print_header("\nMalloc and free:\n", f_log);
     print_header("warning: this is not a regular use of the functions\n\n",
                  f_log);
 
