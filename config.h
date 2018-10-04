@@ -11,9 +11,9 @@ const char log_file[] = "results";
 
 
 enum Flag {
-    /* Whether to run in interactive mode. */
+    /* Whether to run in interactive mode */
     FLAG_INTERACTIVE              = 1,
-    /* Flags to choose to run different benchmarks. */
+    /* Flags to choose to run different benchmarks */
     FLAG_INTEGERS                 = 1,
     FLAG_FLOATS                   = 1,
     FLAG_DOUBLES                  = 1,
@@ -26,7 +26,7 @@ enum Flag {
     FLAG_STRING_FUNCTIONS         = 1,
     FLAG_STRING_NUMBER_CONVERSION = 1,
     /* See debug output? */
-    DEBUG                         = 1,
+    DEBUG                         = 0,
 };
 
 #endif /* BENCHMARKS_CONFIG_H */
