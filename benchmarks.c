@@ -86,7 +86,8 @@ main()
     printf("\nWould you like to adjust the number of iterations ");
     printf("per each benchmark?\n");
     printf("Benchmarks on fast operations should be run multiple times.\n");
-    printf("If the current value runs too long or too fast, adjust its value.\n");
+    printf("If the current value runs too long or too fast, ");
+    printf("adjust its value.\n");
     printf("Enter the number of iterations or press enter for default\n");
     printf("[default %lld]: ", iterations);
     unsigned long long int tmp_iterations;
@@ -524,7 +525,8 @@ void
 malloc_free(void)
 {
     print_header("\nMalloc and free:\n\n", f_log);
-    print_header("warning: this is not a regular use of the functions\n\n", f_log);
+    print_header("warning: this is not a regular use of the functions\n\n",
+                 f_log);
 
     start = clock();
     for (i = 0; i < iterations; i++)
